@@ -9,14 +9,15 @@ const Problem2 = () => {
     const [showOnlyEven, setShowOnlyEven] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`https://contact.mediusware.com/api/contacts/?page=${currentPage}`);
                 const data = await response.json();
-                setContacts(data.results);
+                setContacts((prevContacts) => [...prevContacts, ...data.results]);
             } catch (error) {
-                console.error("Error fetching contacts:", error);
+                console.error("Error => :", error);
             }
         };
 
@@ -35,6 +36,8 @@ const Problem2 = () => {
         filterContacts();
     }, [showOnlyEven, contacts]);
 
+
+
     const openModal = (type) => {
         setModalType(type);
         setModalOpen(true);
@@ -45,7 +48,6 @@ const Problem2 = () => {
 
     const closeModal = () => {
         setModalOpen(false);
-
         window.history.pushState(null, "", "/");
     };
 
