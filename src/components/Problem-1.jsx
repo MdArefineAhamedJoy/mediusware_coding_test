@@ -91,7 +91,12 @@ const Problem1 = () => {
                             </tr>
                         </thead>
                         <tbody>
-
+                            {filteredData.map((data, index) => (
+                                <tr key={index}>
+                                    <td>{data.name}</td>
+                                    <td>{data.status}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
