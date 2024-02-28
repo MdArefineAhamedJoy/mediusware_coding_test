@@ -9,15 +9,14 @@ const Problem2 = () => {
     const [showOnlyEven, setShowOnlyEven] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
-
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`https://contact.mediusware.com/api/contacts/?page=${currentPage}`);
                 const data = await response.json();
-                setContacts((prevContacts) => [...prevContacts, ...data.results]);
+                setContacts(data.results);
             } catch (error) {
-                console.error("Error => :", error);
+                console.error("Error => ", error);
             }
         };
 
@@ -36,8 +35,6 @@ const Problem2 = () => {
         filterContacts();
     }, [showOnlyEven, contacts]);
 
-
-
     const openModal = (type) => {
         setModalType(type);
         setModalOpen(true);
@@ -48,6 +45,7 @@ const Problem2 = () => {
 
     const closeModal = () => {
         setModalOpen(false);
+
         window.history.pushState(null, "", "/");
     };
 
@@ -82,7 +80,7 @@ const Problem2 = () => {
                     <Modal.Body>
                         <ul>
                             {filteredContacts.map((contact) => (
-                                <li key={contact.id} onClick={() => openDetailsModal(contact)} style={{ cursor: "pointer" }}>
+                                <li className="mt-2" key={contact.id} onClick={() => openDetailsModal(contact)} style={{ cursor: "pointer" }}>
                                     <span>Phone: {contact.phone}</span>{" "}
                                     <span>Country: {contact?.country?.name || "Country Not Available"}</span>
                                 </li>
