@@ -1,12 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { sortedData } from './Hooks';
 
 const Problem1 = () => {
 
     const [show, setShow] = useState('all');
     const [inputData, setInputData] = useState([]);
+    const [filteredData, setFilteredData] = useState([])
 
 
     const handleClick = (val) => {
+        console.log(val)
         setShow(val);
     }
 
@@ -19,6 +22,19 @@ const Problem1 = () => {
         setInputData([...inputData, data]);
         form.reset();
     };
+
+    useEffect(() => {
+        if (show === 'active') {
+            const activeStatus = inputData.filter((data) => data.status === 'active');
+            setFilteredData(activeStatus);
+        } else if (show === 'completed') {
+            const completedStatus = inputData.filter((data) => data.status === 'completed');
+            setFilteredData(completedStatus);
+        } else if (show === "all") {
+            const sortAll = sortedData(inputData,)
+            setFilteredData(sortAll);
+        }
+    }, [show, inputData]);
 
 
     return (
